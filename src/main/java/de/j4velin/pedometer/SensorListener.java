@@ -108,11 +108,19 @@ public class SensorListener extends Service implements SensorEventListener {
             lastSaveSteps = steps;
             lastSaveTime = System.currentTimeMillis();
             showNotification(); // update notification
-            startService(new Intent(this, WidgetUpdateService.class));
+//            startService(new Intent(this, WidgetUpdateService.class));
+            sendSteps(steps);
             return true;
         } else {
             return false;
         }
+    }
+
+    void sendSteps(int steps) {
+        Intent localIntent = new Intent("sendSteps");
+        localIntent.putExtra("steps", steps);
+        localIntent.addCategory("android.intent.category.DEFAULT");
+        startService(localIntent);
     }
 
     private void showNotification() {
